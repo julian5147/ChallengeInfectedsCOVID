@@ -7,14 +7,12 @@ class InfectedService {
   }
 
   async getInfectedOfApi() {
-    const response = await axios.get(baseUrl);
-    if (!response) {
-      const error = new Error();
-      error.message = "Infected not found!";
-      throw error;
+    try {
+      const response = await axios.get(baseUrl);
+      return response.data;
+    } catch (error) {
+      console.log(error.response.status + " " + error.response.statusText);
     }
-
-    return response.data;
   }
 
   async getFiltersInfected(query) {
@@ -23,11 +21,12 @@ class InfectedService {
   }
 
   async getFilterSexAgeInfected(sex) {
-    const infected = await this.getInfectedOfApi();
-    const infectedFilter = await this._infectedBusiness.getFilterSexAgeInfected(
-      sex,
-      infected
-    );
+      const infected = await this.getInfectedOfApi();
+      const infectedFilter = await this._infectedBusiness.getFilterSexAgeInfected(
+        sex,
+        infected
+      );
+
     return infectedFilter;
   }
 
@@ -36,9 +35,7 @@ class InfectedService {
     const createInfected = await this._infectedBusiness.getOrCreateInfected(
       infected
     );
-    return createInfected;
   }
-
 }
 
 module.exports = InfectedService;

@@ -24,6 +24,10 @@ class InfectedBusiness {
         } else if (infect.edad >= 40) {
           Age_40_mas.push(infect);
         }
+      } else {
+        const error = new Error();
+        error.message = "Sex not found!";
+        throw error;
       }
     });
 

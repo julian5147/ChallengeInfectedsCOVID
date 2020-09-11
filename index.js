@@ -4,11 +4,12 @@ const application = container.resolve("app");
 const db = container.resolve("db");
 const service = container.resolve("InfectedService");
 
+setInterval(() => service.getOrCreateInfected(), 600000);
+
 application
   .start()
   .then(async () => {
     await db.sequelize.sync();
-    await service.getOrCreateInfected();
   })
   .catch((err) => {
     console.log(err);
